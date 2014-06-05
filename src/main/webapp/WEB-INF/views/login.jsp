@@ -10,12 +10,15 @@
     </head>
     <body>
         <div id="login-div">
+            <c:if test="${errorMsg!=null}">
+                <label class="error"> <c:out value="${errorMsg}" /> </label>
+            </c:if>
             <form id="login-form" method="post" action="<c:out value='${pageContext.request.contextPath}'/>/login">
                 <table>
                 <tr>
                     <td class="tdLabel"><label for="login-form_username" class="label">Username:</label></td>
                     <td>
-                        <input id="login-form_username" name="username" type="text"/>
+                        <input id="login-form_username" name="username" type="text" value='<c:out value="${username}" />'/>
                     </td>
                 </tr>
 
@@ -48,8 +51,8 @@
                    $("#login-form").submit();
 
                 },
-                "Cancel": function() {
-                    $( this ).dialog( "close" );
+                "reset": function() {
+                   $("#login-form").reset();
                 }
             },
             close: function() {

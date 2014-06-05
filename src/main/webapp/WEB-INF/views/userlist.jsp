@@ -2,30 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page language= "java" contentType="text/html;charset=UTF-8"%>
-
-<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/default/easyui.css">
-<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/themes/icon.css">
-<link rel="stylesheet" type="text/css" href="http://www.jeasyui.com/easyui/demo/demo.css">
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-<script type="text/javascript" src="http://www.jeasyui.com/easyui/jquery.easyui.min.js"></script>
-
-    <table id="dg" title="DataGrid" style="width:700px;height:250px" data-options="
-                singleSelect:true,
-                data:data
-            ">
-        <thead>
-            <tr>
-                <th data-options="field:'itemid',width:80">Item ID</th>
-                <th data-options="field:'productid',width:100">Product</th>
-                <th data-options="field:'listprice',width:80,align:'right'">List Price</th>
-                <th data-options="field:'unitcost',width:80,align:'right'">Unit Cost</th>
-                <th data-options="field:'attr1',width:250">Attribute</th>
-                <th data-options="field:'status',width:60,align:'center'">Status</th>
-            </tr>
-        </thead>
-    </table>
-
-
+<script type="text/javascript" src="<c:out value='${pageContext.request.contextPath}'/>/resources/js/common.js"></script>
 
 
 <script  type="text/javascript">
@@ -39,7 +16,10 @@
          });
     }
 </script>
-
+    <form id="employee-filter-form" action="<c:out value='${pageContext.request.contextPath}'/>/user/json">
+        <input type="hidden" name="deptNo" value='<c:out value="${deptNo}" />'/>
+        <input type="hidden" name="currentPage" id="filter-currentPage" value="1"/>
+    </form>
     <div class="ui-widget">
         <table class="ui-widget ui-widget-content">
            <thead>
@@ -48,27 +28,99 @@
                </tr>
            </thead>
            <tbody id="item-table-body">
-           <c:if test="${fn:length(employees) > 0}">
-               <c:forEach items="${employees}" var="employee">
-               <tr>
-                    <td class="tdValue"> <c:out value="${employee.firstName}"/></td>
-                    <td class="tdValue"> <c:out value="${employee.lastName}"/></td>
-                    <td class="tdValue"> <c:out value="${employee.gender}"/></td>
-                    <td class="tdValue"> <c:out value="${employee.currentTitle.title}"/></td>
-                    <td class="tdValue"><fmt:formatDate pattern="dd/MM/yyyy" value="${employee.hireDate}" /></td>
-                    <td>
-                        <script type="text/javascript">
-                            document.write(createDetailLink('<c:out value="${employee.empNo}"/>'));
-                            addEvent('<c:out value="${employee.empNo}"/>');
-                        </script>
-                    </td>
-               </tr>
-           </c:forEach>
-           </c:if>
            </tbody>
        </table>
    </div>
+   <div class="page">
+    <a href="javascript:pageClick('first')"><span>&lt;&lt;</span></a>&nbsp;&nbsp;&nbsp;
+    <a href="javascript:pageClick('prev')"><span>&lt;</span></a>&nbsp;&nbsp;&nbsp;
+    <a href="javascript:pageClick('next')"><span>&gt;</span></a>&nbsp;&nbsp;&nbsp;
+    <a href="javascript:pageClick('last')"><span>&gt;&gt;</span></a>
+    <span id="numberIndicator"></span>
+</div>
 
+<input type="hidden" name="totalPage" id="filter-totalPage" value="1"/>
+
+
+
+<script  type="text/javascript">
+
+    function processUserListJson(data) {
+        //remove all data
+        console.log("received data");
+        $("#item-table-body tr").remove();
+        var employees = data.employees;
+        for (i=0; i<employees.length; i++) {
+            console.log("get " + employees[i]);
+            $("#item-table-body").append($(createUserRow(employees[i])));
+        }
+
+        updateNumberIndicator(data.filter);
+    }
+
+    function updateNumberIndicator(filter) {
+        var begin = (filter.currentPage - 1) * filter.countPerPage + 1;
+        var end = filter.currentPage * filter.countPerPage;
+        if (end > filter.total) end = filter.total;
+        $("#numberIndicator").text("Showing " + begin + " to " + end + " of " + filter.total);
+        $("#filter-currentPage").val(filter.currentPage);
+        $("#filter-totalPage").val(parseInt((filter.total + 1) / filter.countPerPage + 1));
+    }
+
+    function createUserRow(emp) {
+        return " <tr>" +
+            "     <td class=\"tdValue\">" + emp.firstName + "</td>" +
+            "     <td class=\"tdValue\">" + emp.lastName + "</td>" +
+            "     <td class=\"tdValue\">" + emp.gender + "</td>" +
+            "     <td class=\"tdValue\">" + emp.title + "</td>" +
+            "     <td class=\"tdValue\">" + emp.hireDate + "</td>" +
+            "     <td class=\"tdValue\">" + "</td>" +
+            "  </tr>";
+    }
+
+    function pageClick(page) {
+        console.log('page: ' + page + ' clicked');
+        var currentPage = $("#filter-currentPage").val();
+        var totalPage = $("#filter-totalPage").val();
+        var newPage = currentPage;
+        console.log("current page " + currentPage);
+        if (page == "first") {
+            newPage = 1;
+        } else if (page == "prev") {
+            newPage = (currentPage) == 1 ? 1 : (currentPage - 1);
+        } else if (page == "next") {
+            newPage = (currentPage == totalPage) ? totalPage : (parseInt(currentPage) + 1);
+        } else if (page == "last") {
+            newPage = totalPage;
+        }
+
+        console.log("new page " + newPage);
+        if (newPage != currentPage) {
+            $("#filter-currentPage").val(newPage);
+            $('#employee-filter-form').submit();
+            console.log("request new page");
+        }
+
+    }
+
+
+    $().ready(function(){
+        $('#employee-filter-form').ajaxForm({
+            // dataType identifies the expected content type of the server response
+            dataType:  'json',
+
+            // success identifies the function to invoke when the server response
+            // has been received
+            success:   processUserListJson
+        });
+
+        $('#employee-filter-form').submit();
+        console.log("form submit");
+    });
+
+
+
+</script>
 
 
 

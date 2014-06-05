@@ -1,7 +1,7 @@
 package com.windrift.controller;
 
 
-import com.windrift.model.Employees;
+import com.windrift.model.entity.Employees;
 import com.windrift.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +32,19 @@ public class LoginController {
         Employees employee = userService.getEmployee(password);
         if (employee != null && (employee.getFirstName() + "." + employee.getLastName()).equals(username)) {
             if (employee.isManager()) {
-                return "forward:/user/dept/" + employee.getCurrentDepartment().getDeptNo();
+                String deptNo = employee.getCurrentDepartment().getDeptNo();
+                model.addAttribute("deptNo", deptNo);
+                return "/userlist";
             }
             else {
                 model.addAttribute("employee", employee);
                 return "/userdetail";
             }
         }
-        else
-            return "index";
+        else {
+            model.addAttribute("errorMsg", "Username or password not correct");
+            model.addAttribute("username", username);
+            return "login";
+        }
     }
 }

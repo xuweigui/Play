@@ -15,3 +15,7 @@ label.error {
 	width: auto;
 	display: inline;
 }
+
+span.ui-icon-closethick {
+    display:none;
+}
