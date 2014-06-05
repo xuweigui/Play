@@ -3,7 +3,7 @@
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page language= "java" contentType="text/html;charset=UTF-8"%>
 <script type="text/javascript" src="<c:out value='${pageContext.request.contextPath}'/>/resources/js/common.js"></script>
-
+<body>
 
 <script  type="text/javascript">
 
@@ -17,7 +17,9 @@
     }
 </script>
 <div id="mask"><span>loading...<span></div>
-<div>
+<div id="filter-div">
+    <h3>Specify condition to filter:</h3>
+    <div>
     <form id="employee-filter-form" action="<c:out value='${pageContext.request.contextPath}'/>/user/json">
         <input type="hidden" name="deptNo" value='<c:out value="${deptNo}" />'/>
         <input type="hidden" name="currentPage" id="filter-currentPage" value="1"/>
@@ -74,9 +76,10 @@
             </div>
            </div>
     </form>
+    </div>
 </div>
 
-    <div class="ui-widget">
+    <div class="ui-widget" id="grid-div">
         <table class="ui-widget ui-widget-content">
            <thead>
                <tr class="ui-widget-header ">
@@ -106,6 +109,7 @@
 <input type="hidden" name="totalPage" id="filter-totalPage" value="1"/>
 
 
+<div id="userDetailDialog"></div>
 
 <script  type="text/javascript">
 
@@ -128,6 +132,7 @@
         var begin = (filter.currentPage - 1) * filter.countPerPage + 1;
         var end = filter.currentPage * filter.countPerPage;
         if (end > filter.total) end = filter.total;
+        if (begin > end) begin = end;
         $("#numberIndicator").text("Showing " + begin + " to " + end + " of " + filter.total);
         $("#filter-currentPage").val(filter.currentPage);
         $("#filter-totalPage").val(parseInt((filter.total + 1) / filter.countPerPage + 1));
@@ -140,8 +145,19 @@
             "     <td class=\"tdValue\">" + emp.gender + "</td>" +
             "     <td class=\"tdValue\">" + emp.title + "</td>" +
             "     <td class=\"tdValue\">" + emp.hireDate + "</td>" +
-            "     <td class=\"tdValue\">" + "</td>" +
+            "     <td class=\"tdValue\"><button onclick=\"viewDetail(this, '"+ emp.empNo +"');return false;\" type='button class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' role='button' aria-disabled='false'><span>Detail</span></button></td>" +
             "  </tr>";
+    }
+
+    contextPath = "<c:out value='${pageContext.request.contextPath}'/>";
+
+    function viewDetail(event, empNo) {
+        //window.open(contextPath + "/user/" + empNo);
+        //$("#userDetailDialog").load(contextPath + "/user/" + empNo);
+        //event.stopPropagation();
+        //$("#userDetailDialog").dialog("open");
+        window.showModalDialog(contextPath + "/user/" + empNo,"User Detail",
+        "dialogWidth:355px;dialogHeight:300px;center=yes;status=no;location=no");
     }
 
     function pageClick(page) {
@@ -190,13 +206,19 @@
         $("#employee-filter_hireDateTo").datepicker();
         $("#employee-filter_hireDateTo").datepicker('option','dateFormat','dd/mm/yy');
 
+        //this is a dialog for showing user detail
+        $("#userDetailDialog").dialog({  //create dialog, but keep it closed
+           autoOpen: false,
+           height: 300,
+           width: 350,
+           modal: true
+        });
+
 
     });
 
-
-
 </script>
-
+</body>
 
 
 

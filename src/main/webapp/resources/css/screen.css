@@ -37,4 +37,63 @@ span.ui-icon-closethick {
     left: 50%;
     margin-left: -50px;
     margin-top: -25px;
+    color: #FFFFFF;
+    font-size:18px;
 }​
+html,body { height: 100%; margin: 0px; padding: 0px; }
+
+#filter-div {
+    height:100%;
+    width:30%;
+    float:left;
+    margin-top:10;
+    margin-left:10;
+    margin-right:10;
+    border:1px;
+    border-radius:2px;
+}
+
+#filter-div form {
+    width:100%;
+}
+
+#filter-div form table {
+    width:100%;
+    margin-bottom:5px;
+}
+
+#grid-div {
+    height:100%;
+    width:64%;
+    float:right;
+    margin-top:10;
+    border:1px;
+    border-radius:2px;
+}
+
+#grid-div table {
+    width:98%;
+     
+}
+
+tr {
+    margin-bottom:2px;
+}
+
+#user-detail-div {
+    width:98%;
+
+}
+#user-detail-div table{
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    top: 50%;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -150px;
+}
+
+#user-detail-div td.tdLabel {
+    background-color:#5C9CCC;
+}

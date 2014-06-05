@@ -3,7 +3,8 @@
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page language= "java" contentType="text/html;charset=UTF-8"%>
 <script type="text/javascript" src="<c:out value='${pageContext.request.contextPath}'/>/resources/js/common.js"></script>
-    <div class="ui-widget">
+<body>
+    <div class="ui-widget" id="user-detail-div">
     <table class="ui-widget ui-widget-content">
        <tbody id="item-table-body">
            <tr>
@@ -50,6 +51,6 @@
        </table>
    </div>
 
-
+</body>
 
 

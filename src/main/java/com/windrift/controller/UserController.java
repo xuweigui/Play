@@ -38,14 +38,6 @@ public class UserController {
         model.addAttribute("employee", employee);
         return "userdetail";
     }
-/*
-    @RequestMapping("/dept/{deptNo}")
-    public String displayAllUserInDepartment(@PathVariable("deptNo") String deptNo, Model model) {
-        List<Employees> employees = userService.getEmployeesBy(deptNo);
-        model.addAttribute("employees", employees);
-        return "userlist";
-    }*/
-
 
     @RequestMapping(value="/json")
     @ResponseBody

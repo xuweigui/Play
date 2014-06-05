@@ -45,14 +45,11 @@
             autoOpen: true,
             resizable: false,
             closeOnEscape: false,
-            title: 'login',
+            title: 'Welcome!',
             buttons: {
                 "login": function() {
                    $("#login-form").submit();
 
-                },
-                "reset": function() {
-                   $("#login-form").reset();
                 }
             },
             close: function() {
@@ -70,6 +67,9 @@
                 }
             }
         });
+
+        $("#login-div button").focus();
+        $("span[class*='ui-icon-closethick']").css("display", "none");
 
         //$("#login-div").dialog("open");
     });
