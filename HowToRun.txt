@@ -1,0 +1,37 @@
+1. How to run it
+
+1) make sure you have java 1.7 installed
+2) install maven if you don't have it. Maven can be get from http://maven.apache.org/download.cgi
+
+3) Check point 
+in a command line, type "mvn --version" should give you something like:
+###################################
+> mvn --version
+Apache Maven 3.2.1 (ea8b2b07643dbb1b84b6d16e1f08391b666bc1e9; 2014-02-15T04:37:52+10:00)
+Maven home: /usr/maven
+Java version: 1.8.0_05, vendor: Oracle Corporation
+Java home: /usr/java/jdk1.8.0_05/jre
+Default locale: en_AU, platform encoding: UTF-8
+OS name: "linux", version: "3.11.0-22-generic", arch: "amd64", family: "unix"
+#######################################
+
+4) decompress the IressTest.zip
+5) config DB
+Open file "config.properties" under "IressTest/src/main/resources". Update the user/password to access the MySQL employees DB.
+
+6) in a command line, go to the directory "IressTest/" and type following command:
+      mvn clean jetty:run
+7) Wait until you see something like
+###############################
+[INFO] Initializing Spring FrameworkServlet 'appServlet'
+[INFO] Started SelectChannelConnector @ 0.0.0.0:8080
+[INFO] Started Jetty Server
+[INFO] Starting scanner at interval of 10 seconds.
+###############################
+
+8) open a browser, type this url: http://localhost:8080/IressTest
+
+9) You can login with follow user & password. Or can get one from the DB
+normal employee:Georgi.Facello/10001
+Manager: 	Hauke.Zhang/111133
+
