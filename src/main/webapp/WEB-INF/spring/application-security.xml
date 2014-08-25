@@ -9,14 +9,14 @@
 
     <http auto-config="true" use-expressions="true" entry-point-ref="myEntryPoint">
 
-        <intercept-url pattern="/*" access="isAuthenticated()"/>
-        <intercept-url pattern="views/login.jsp" access="permitAll"/>
+        <intercept-url pattern="/IressTest**" access="isAuthenticated()"/>
+        <intercept-url pattern="/login.jsp" access="permitAll"/>
 
             <!-- access denied page -->
         <access-denied-handler error-page="/403" />
 
         <form-login
-            login-page="views/login.jsp"
+            login-page="/login.jsp"
             default-target-url="/welcome"
             authentication-failure-url="/login?error"
             username-parameter="username"
