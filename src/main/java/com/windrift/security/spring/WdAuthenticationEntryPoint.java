@@ -11,8 +11,8 @@ import java.io.IOException;
 /**
  * Created by gary on 25/08/14.
  */
-public class MyAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
-    public MyAuthenticationEntryPoint(String loginFormUrl) {
+public class WdAuthenticationEntryPoint extends LoginUrlAuthenticationEntryPoint {
+    public WdAuthenticationEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
     }
 
