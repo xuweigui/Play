@@ -5,7 +5,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
-        <script type="text/javascript" src="<c:out value='${pageContext.request.contextPath}'/>/resources/js/common.js"></script>
+        <script type="text/javascript" src="<c:url value='/resources/js/common.js'/>"></script>
         <title>Iress Test</title>
     </head>
     <body>
@@ -13,7 +13,7 @@
             <c:if test="${errorMsg!=null}">
                 <label class="error"> <c:out value="${errorMsg}" /> </label>
             </c:if>
-            <form id="login-form" method="post" action="<c:out value='${pageContext.request.contextPath}'/>/login">
+            <form id="login-form" method="post" action="<c:url value='/j_spring_security_check'/>" >
                 <table>
                 <tr>
                     <td class="tdLabel"><label for="login-form_username" class="label">Username:</label></td>

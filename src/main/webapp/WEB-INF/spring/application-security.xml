@@ -33,7 +33,7 @@
     </http>
 
     <beans:bean id="myEntryPoint" class="com.windrift.security.spring.MyAuthenticationEntryPoint">
-        <beans:constructor-arg index="0" value="/views/login.jsp"/>
+        <beans:constructor-arg index="0" value="/login.jsp"/>
     </beans:bean>
 
         <!-- Select users and user_roles from database -->
