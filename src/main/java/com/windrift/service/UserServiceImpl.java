@@ -35,6 +35,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Employees getEmployeeByName(String firstName, String lastName) {
+        try {
+            return (Employees) em.createQuery("from Employees e where e.firstName=:fn and e.lastName=:ln")
+                    .setParameter("fn", firstName)
+                    .setParameter("ln", lastName)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
     public Long getTotalBy(EmployeeSearchCondition filter) {
 
         Map<String, Object> params = new HashMap<>();

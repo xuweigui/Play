@@ -8,6 +8,8 @@ import java.util.List;
 public interface UserService {
 
     Employees getEmployee(String empNo);
+
+    Employees getEmployeeByName(String firstName, String lastName);
     Long getTotalBy(EmployeeSearchCondition filter);
     List<Employees> getEmployeesBy(EmployeeSearchCondition filter);
 }

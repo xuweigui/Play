@@ -30,7 +30,7 @@
         <logout logout-url="/j_spring_security_logout" logout-success-url="/login?logout"
                 delete-cookies="JSESSIONID"/>
             <!-- enable csrf protection -->
-        <csrf/>
+        <!--<csrf/>-->
     </http>
 
     <beans:bean id="entryPoint" class="com.windrift.security.spring.WdAuthenticationEntryPoint">
@@ -38,16 +38,11 @@
     </beans:bean>
 
     <beans:bean id="userDetailService" class="com.windrift.security.spring.WdUserDetailService">
-        <beans:constructor-arg name="dataSource" ref="dataSource"/>
+        <beans:constructor-arg name="userService" ref="userService"/>
     </beans:bean>
         <!-- Select users and user_roles from database -->
     <authentication-manager>
-        <authentication-provider>
-            <jdbc-user-service data-source-ref="dataSource"
-                               users-by-username-query=
-                                       "select first_name, last_name, emp_no from employees where concat_ws('.', first_name, last_name)=?"
-                               />
-        </authentication-provider>
+        <authentication-provider user-service-ref="userDetailService"/>
     </authentication-manager>
 
 

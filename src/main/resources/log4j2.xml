@@ -29,6 +29,7 @@
 
     <Loggers>
         <Logger name="com.windrift" level="debug"/>
+        <Logger name="org.springframework.security" level="debug"/>
         <Root level="info">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFileDebug"/>
