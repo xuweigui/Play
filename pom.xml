@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.windrift</groupId>
-    <artifactId>IressTest</artifactId>
+    <artifactId>Play</artifactId>
     <version>1</version>
     <packaging>war</packaging>
-    <name>IressTest</name>
+    <name>Play</name>
 
     <!-- manage versions by properties -->
     <properties>
@@ -273,7 +273,7 @@
                 <version>8.1.15.v20140411</version>
                 <configuration>
                     <webApp>
-                         <contextPath>/IressTest</contextPath>
+                         <contextPath>/${project.artifactId}</contextPath>
                     </webApp>
                 </configuration>
             </plugin>
