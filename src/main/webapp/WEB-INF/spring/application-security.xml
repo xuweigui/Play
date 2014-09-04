@@ -27,6 +27,7 @@
             password-parameter="password"
 
             />
+        <!--http://www.baeldung.com/spring_redirect_after_login-->
         <logout logout-url="/j_spring_security_logout" logout-success-url="/login?logout"
                 delete-cookies="JSESSIONID"/>
             <!-- enable csrf protection -->

@@ -37,7 +37,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Employees getEmployeeByName(String firstName, String lastName) {
         try {
-            return (Employees) em.createQuery("from Employees e where e.firstName=:fn and e.lastName=:ln")
+            return (Employees) em.createQuery("from Employees e " +
+                    "left join fetch e.employeeDepartments " +
+                    "left join fetch e.managerDepartments " +
+                    "where e.firstName=:fn and e.lastName=:ln")
                     .setParameter("fn", firstName)
                     .setParameter("ln", lastName)
                     .getSingleResult();
